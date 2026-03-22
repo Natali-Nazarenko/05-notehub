@@ -5,9 +5,16 @@ import NoteList from '../NoteList/NoteList';
 import css from './App.module.css';
 import { fetchNotes } from '../../services/noteService';
 import Pagination from '../Pagination/Pagination';
+import Modal from '../Modal/Modal';
+import NoteForm from '../NoteForm/NoteForm';
 
 function App() {
     const [page, setPage] = useState(1);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+    const openModal = () => setIsModalOpen(true);
+    const closeModal = () => setIsModalOpen(false);
+
     const { data, isLoading, isError, isSuccess } = useQuery({
         queryKey: ['notes', page],
         queryFn: () => fetchNotes(page),
@@ -25,8 +32,15 @@ function App() {
                         onPageChange={setPage}
                     />
                 )}
-                {/* Кнопка створення нотатки */}
+                <button className={css.button} onClick={openModal}>
+                    Create note +
+                </button>
             </header>
+            {isModalOpen && (
+                <Modal>
+                    <NoteForm onClose={closeModal} />
+                </Modal>
+            )}
             {data && data.notes.length > 0 && <NoteList notes={data.notes} />}
         </div>
     );

@@ -1,9 +1,15 @@
 import axios from 'axios';
-import type { CreateNote, Note } from '../types/note';
+import type { Note } from '../types/note';
 
 interface ApiResponse {
     notes: Note[];
     totalPages: number;
+}
+
+interface CreateNote {
+    title: string;
+    content: string;
+    tag: string;
 }
 
 const myKey = import.meta.env.VITE_NOTEHUB_TOKEN;
@@ -30,6 +36,7 @@ export async function createNote(payload: CreateNote): Promise<Note> {
     return data;
 }
 
-export async function deleteNote(noteId: Note['id']): Promise<void> {
-    await axios.delete(`/notes/${noteId}`);
+export async function deleteNote(noteId: Note['id']): Promise<Note> {
+    const { data } = await axios.delete<Note>(`/notes/${noteId}`);
+    return data;
 }

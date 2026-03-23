@@ -34,13 +34,14 @@ const NoteSchema = Yup.object({
 });
 
 function NoteForm({ onClose }: NoteFormProps) {
-    const fieldId = useId;
+    const fieldId = useId();
 
     const queryClient = useQueryClient();
 
     const { mutate } = useMutation({
         mutationFn: createNote,
         onSuccess: () => {
+            onClose();
             queryClient.invalidateQueries({ queryKey: ['notes'] });
         },
         onError: error => {
@@ -51,7 +52,6 @@ function NoteForm({ onClose }: NoteFormProps) {
     const handleSubmit = (values: NoteFormValues, formikHelpers: FormikHelpers<NoteFormValues>) => {
         mutate(values);
         formikHelpers.resetForm();
-        onClose();
     };
 
     return (

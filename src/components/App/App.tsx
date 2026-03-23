@@ -22,6 +22,7 @@ function App() {
 
     const handleSearch = useDebouncedCallback((value: string) => {
         setSearch(value);
+        setPage(1);
     }, 1000);
 
     const { data, isLoading, isError, isSuccess } = useQuery({

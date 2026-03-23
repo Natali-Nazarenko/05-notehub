@@ -6,7 +6,7 @@ interface SearchBoxProps {
 }
 
 function SearchBox({ value, onSearch }: SearchBoxProps) {
-    const hanleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         onSearch(event.target.value);
     };
     return (
@@ -14,7 +14,7 @@ function SearchBox({ value, onSearch }: SearchBoxProps) {
             className={css.input}
             type="text"
             defaultValue={value}
-            onChange={hanleChange}
+            onChange={handleChange}
             placeholder="Search notes"
         />
     );
